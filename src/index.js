@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import fetchJsFromCDN from './fetch-js-from-cdn';
 import './index.css';
 
@@ -22,19 +21,10 @@ export default function Aliplayer({ config, onGetInstance }) {
                 ...config,
                 "id": id,
             }, (player) => {
-                onGetInstance(player);
+                onGetInstance && onGetInstance(player);
             });
         });
     }, [id, config]);
 
     return <div id={id}></div>
 }
-
-Aliplayer.propTypes = {
-    config: PropTypes.shape().isRequired,
-    onGetInstance: PropTypes.func(),
-};
-
-Aliplayer.defaultProps = {
-    onGetInstance: () => {},
-};
