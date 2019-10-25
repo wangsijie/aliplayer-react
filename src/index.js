@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import fetchJsFromCDN from './fetch-js-from-cdn';
 import './index.css';
 
 const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
 
-export default function Aliplayer({ config }) {
+export default function Aliplayer({ config, onGetInstance }) {
     if (!config) {
         throw new Error('Missing Aliplayer config');
     }
@@ -20,9 +21,20 @@ export default function Aliplayer({ config }) {
             player.current = new Aliplayer({
                 ...config,
                 "id": id,
+            }, (player) => {
+                onGetInstance(player);
             });
         });
     }, [id, config]);
 
     return <div id={id}></div>
 }
+
+Aliplayer.propTypes = {
+    config: PropTypes.shape().isRequired,
+    onGetInstance: PropTypes.func(),
+};
+
+Aliplayer.defaultProps = {
+    onGetInstance: () => {},
+};

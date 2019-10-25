@@ -33,9 +33,10 @@ const config = {
 };
 
 class App extends Component {
+    state = { instance: null } // player instance, e.g: player.stop();
     render() {
         return <div>
-            <Player config={config} />
+            <Player config={config} onGetInstance={instance => this.setState({ instance })} />
         </div>
     }
 }
