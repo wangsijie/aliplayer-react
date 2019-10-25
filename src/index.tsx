@@ -1,10 +1,15 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, FunctionComponent } from 'react';
 import fetchJsFromCDN from './fetch-js-from-cdn';
 import './index.css';
 
-const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'
+const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
 
-export default function Aliplayer({ config, onGetInstance }) {
+interface Props {
+    config?: any;
+    onGetInstance?: Function;
+}
+
+const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance }) => {
     if (!config) {
         throw new Error('Missing Aliplayer config');
     }
@@ -15,12 +20,13 @@ export default function Aliplayer({ config, onGetInstance }) {
     useEffect(() => {
         if (!id || player.current) { return }
         fetchJsFromCDN(SOURCE_URL, ['Aliplayer'])
-        .then(([Aliplayer]) => {
+        .then((data: any[]) => {
+            const Aliplayer = data[0];
             if (player.current) { return }
             player.current = new Aliplayer({
                 ...config,
                 "id": id,
-            }, (player) => {
+            }, (player: any) => {
                 onGetInstance && onGetInstance(player);
             });
         });
@@ -28,3 +34,5 @@ export default function Aliplayer({ config, onGetInstance }) {
 
     return <div id={id}></div>
 }
+
+export default Aliplayer

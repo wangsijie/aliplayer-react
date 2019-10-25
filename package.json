@@ -1,13 +1,11 @@
 {
   "name": "aliplayer-react",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "React component wrapper for aliplayer.",
   "main": "lib/index.js",
-  "module": "esm/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rm -rf esm && rm -rf lib && npm run build:esm && npm run build:commonjs && cpx \"src/**/*.css\" esm && cpx \"src/**/*.css\" lib",
-    "build:commonjs": "cross-env BABEL_OUTPUT=commonjs babel src --out-dir lib/ --ignore **/__tests__,**/__mocks__",
-    "build:esm": "babel src --out-dir esm/ --ignore **/__tests__,**/__mocks__",
+    "prepare": "tsc && echo 'Finished building NPM package'",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "git@github.com:wangsijie/aliplayer-react.git",
@@ -25,7 +23,10 @@
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
+    "@types/react": "^16.9.10",
     "cpx": "^1.5.0",
-    "cross-env": "^6.0.3"
+    "cross-env": "^6.0.3",
+    "react": "^16.11.0",
+    "typescript": "^3.6.4"
   }
 }
