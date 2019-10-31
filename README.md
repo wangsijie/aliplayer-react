@@ -30,19 +30,23 @@ const config = {
     preload: true,
     controlBarVisibility: "hover",
     useH5Prism: true,
+    components: [
+        {
+            name: "RateComponent",
+            type: Player.components.RateComponent,
+        }
+    ]
 };
 
 class App extends Component {
     state = {
         instance: null,  // player instance, e.g: player.stop();
-        components: null, // AliPlayerComponent, e.g: used for RateComponent
     }
     render() {
         return <div>
             <Player
                 config={config}
                 onGetInstance={instance => this.setState({ instance })}
-                onGetComponents={components => this.setState({ components })}
             />
         </div>
     }

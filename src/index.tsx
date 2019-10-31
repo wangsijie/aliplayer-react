@@ -8,10 +8,9 @@ const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
 interface Props {
     config?: any;
     onGetInstance?: Function;
-    onGetComponents?: Function;
 }
 
-const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance, onGetComponents }) => {
+const Aliplayer: FunctionComponent<Props> & { components: any } = ({ config, onGetInstance }) => {
     if (!config) {
         throw new Error('Missing Aliplayer config');
     }
@@ -34,11 +33,9 @@ const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance, onGetCompo
         });
     }, [id, config]);
 
-    useEffect(() => {
-        onGetComponents && onGetComponents(window.AliPlayerComponent)
-    }, [onGetComponents])
-
     return <div id={id}></div>
 }
+
+Aliplayer.components = window.AliPlayerComponent;
 
 export default Aliplayer
