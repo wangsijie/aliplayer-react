@@ -1,11 +1,12 @@
 {
   "name": "aliplayer-react",
-  "version": "0.3.1",
+  "version": "0.4.1",
   "description": "React component wrapper for aliplayer.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "prepare": "tsc && cpx \"src/**/*.css\" lib",
+    "build": "tsc && cpx \"src/**/*.css\" lib && cpx \"src/deps/*\" lib/deps",
+    "prepare": "npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "git@github.com:wangsijie/aliplayer-react.git",

@@ -33,10 +33,17 @@ const config = {
 };
 
 class App extends Component {
-    state = { instance: null } // player instance, e.g: player.stop();
+    state = {
+        instance: null,  // player instance, e.g: player.stop();
+        components: null, // AliPlayerComponent, e.g: used for RateComponent
+    }
     render() {
         return <div>
-            <Player config={config} onGetInstance={instance => this.setState({ instance })} />
+            <Player
+                config={config}
+                onGetInstance={instance => this.setState({ instance })}
+                onGetComponents={components => this.setState({ components })}
+            />
         </div>
     }
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useMemo, FunctionComponent } from 'react';
 import fetchJsFromCDN from './fetch-js-from-cdn';
+import './deps/aliplayercomponents-1.0.5.min.js';
 import './index.css';
 
 const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
@@ -7,9 +8,10 @@ const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
 interface Props {
     config?: any;
     onGetInstance?: Function;
+    onGetComponents?: Function;
 }
 
-const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance }) => {
+const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance, onGetComponents }) => {
     if (!config) {
         throw new Error('Missing Aliplayer config');
     }
@@ -31,6 +33,10 @@ const Aliplayer: FunctionComponent<Props> = ({ config, onGetInstance }) => {
             });
         });
     }, [id, config]);
+
+    useEffect(() => {
+        onGetComponents && onGetComponents(window.AliPlayerComponent)
+    }, [onGetComponents])
 
     return <div id={id}></div>
 }
