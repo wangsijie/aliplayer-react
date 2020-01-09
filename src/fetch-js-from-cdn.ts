@@ -2,18 +2,32 @@ declare global {
     interface Window { [key: string]: any; }
 }
 
-export default function fetchJsFromCDN(src: string, externals: string[] = []): Promise<any[]> {
-    return new Promise((resolve, reject) => {
-        const script = document.createElement('script')
-        script.setAttribute('src', src)
-        script.addEventListener('load', () => {
-            resolve(externals.map(key => {
-                const ext = window[key];
-                typeof ext === 'undefined' && console.warn(`No external named '${key}' in window`)
-                return ext
-            }))
+const cachedSources: string[] = [];
+
+export default function fetchJsFromCDN(src: string, globalName: string): Promise<any> {
+    if (!cachedSources.includes(src)) {
+        cachedSources.push(src);
+    } else {
+        return new Promise((resolve) => {
+            const check = () => {
+                if (window[globalName]) {
+                    resolve(window[globalName]);
+                } else {
+                    setTimeout(check, 100);
+                }
+            }
+            check();
         })
-        script.addEventListener('error', reject)
-        document.body.appendChild(script)
+    }
+    return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.setAttribute('src', src);
+        script.addEventListener('load', () => {
+            const ext = window[globalName];
+            typeof ext === 'undefined' && console.warn(`No external named '${globalName}' in window`);
+            resolve(ext);
+        })
+        script.addEventListener('error', reject);
+        document.body.appendChild(script);
     });
 }

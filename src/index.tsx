@@ -20,9 +20,9 @@ const Aliplayer: FunctionComponent<Props> & { components: any } = ({ config, onG
 
     useEffect(() => {
         if (!id || player.current) { return }
-        fetchJsFromCDN(SOURCE_URL, ['Aliplayer'])
-        .then((data: any[]) => {
-            const Aliplayer = data[0];
+        fetchJsFromCDN(SOURCE_URL, 'Aliplayer')
+        .then((data: any) => {
+            const Aliplayer = data;
             if (player.current) { return }
             player.current = new Aliplayer({
                 ...config,
