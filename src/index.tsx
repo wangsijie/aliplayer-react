@@ -8,11 +8,16 @@ const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
 interface Props {
     config?: any;
     onGetInstance?: Function;
+    sourceUrl?: string;
 }
 
-const Aliplayer: FunctionComponent<Props> & { components: any } = ({ config, onGetInstance }) => {
+const Aliplayer: FunctionComponent<Props> & { components: any } = ({ config, onGetInstance, sourceUrl = SOURCE_URL }) => {
     if (!config) {
         throw new Error('Missing Aliplayer config');
+    }
+
+    if (!sourceUrl || !/^http/.test(sourceUrl)) {
+        throw new Error('Invalid source url, default is: ' + SOURCE_URL)
     }
 
     const id = useMemo(() => `aliplayer-${Math.floor(Math.random() * 1000000)}`, []);
@@ -20,7 +25,7 @@ const Aliplayer: FunctionComponent<Props> & { components: any } = ({ config, onG
 
     useEffect(() => {
         if (!id || player.current) { return }
-        fetchJsFromCDN(SOURCE_URL, 'Aliplayer')
+        fetchJsFromCDN(sourceUrl, 'Aliplayer')
         .then((data: any) => {
             const Aliplayer = data;
             if (player.current) { return }

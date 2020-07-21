@@ -47,6 +47,8 @@ class App extends Component {
             <Player
                 config={config}
                 onGetInstance={instance => this.setState({ instance })}
+                // Optional: custom cdn url
+                // sourceUrl={'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js'}
             />
         </div>
     }
