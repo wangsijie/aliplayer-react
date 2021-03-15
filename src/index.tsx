@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useMemo, FunctionComponent } from 'react';
-import fetchJsFromCDN from './fetch-js-from-cdn';
+import fetchJsFromCDN from 'fetch-js-from-cdn';
 import './deps/aliplayercomponents-1.0.5.min.js';
 import './index.css';
 
 const SOURCE_URL = 'https://g.alicdn.com/de/prismplayer/2.8.2/aliplayer-min.js';
+
+declare global {
+    interface Window { AliPlayerComponent: any; }
+}
 
 interface Props {
     config?: any;

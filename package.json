@@ -1,6 +1,6 @@
 {
   "name": "aliplayer-react",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "React component wrapper for aliplayer.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -29,5 +29,8 @@
     "cross-env": "^6.0.3",
     "react": "^16.11.0",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "fetch-js-from-cdn": "^0.2.0"
   }
 }
